@@ -1,4 +1,4 @@
-# Build-LLM-Playground 🤖✨
+# LLM from scratch 🤖✨
  
 Welcome to **Build-LLM-Playground** – my personal sandbox where I tinker with **language models**, piece by piece, while following the *"Build LLMs"* book. Think of it as a LEGO set, but for neural networks! 🧩💻  
 
