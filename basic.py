@@ -20,7 +20,7 @@ class GPTDatasetv1(Dataset):
     def __len__(self):
         return len(self.input_ids)
     
-    def __get_item__(self, idx):
+    def __getitem__(self, idx):
         return self.input_ids[idx], self.target_ids[idx]
     
 def create_dataloader_v1(txt, batch=4, max_len=256, stride=128, shuffle=True, drop_last=True, num_workers=0): 
