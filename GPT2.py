@@ -1,12 +1,15 @@
 import urllib.request
 from basic import create_dataloader_v1
 from GPT_architecture import GPTModel
-from ch5 import GPT_CONFIG_124M, generate, text_to_token_ids, token_ids_to_txt, calc_loss_loader
+from Pretraining import GPT_CONFIG_124M, generate, text_to_token_ids, token_ids_to_txt, calc_loss_loader
 import torch
 import tiktoken
 import numpy as np
 
 def assign(left, right):
+    if left is None:
+        # If the parameter doesn't exist (e.g., bias when qkv_bias=False), skip assignment
+        return None
     if left.shape != right.shape:
         raise ValueError(f"Shape mismatch. Left: {left.shape}, "
                           "Right: {right.shape}")
@@ -26,9 +29,15 @@ def load_weights_into_gpt(gpt, params):
         
         # Map Query, Key and Value biases
         q_b, k_b, v_b = np.split((params["blocks"][b]["attn"]["c_attn"])["b"], 3, axis=-1)
-        gpt.trf_blocks[b].att.W_query.bias = assign(gpt.trf_blocks[b].att.W_query.bias, q_b.T)
-        gpt.trf_blocks[b].att.W_key.bias = assign(gpt.trf_blocks[b].att.W_key.bias, k_b.T)
-        gpt.trf_blocks[b].att.W_value.bias = assign(gpt.trf_blocks[b].att.W_value.bias, v_b.T)
+        query_bias = assign(gpt.trf_blocks[b].att.W_query.bias, q_b.T)
+        if query_bias is not None:
+            gpt.trf_blocks[b].att.W_query.bias = query_bias
+        key_bias = assign(gpt.trf_blocks[b].att.W_key.bias, k_b.T)
+        if key_bias is not None:
+            gpt.trf_blocks[b].att.W_key.bias = key_bias
+        value_bias = assign(gpt.trf_blocks[b].att.W_value.bias, v_b.T)
+        if value_bias is not None:
+            gpt.trf_blocks[b].att.W_value.bias = value_bias
 
         gpt.trf_blocks[b].att.out_proj.weight = assign(gpt.trf_blocks[b].att.out_proj.weight, params["blocks"][b]["attn"]["c_proj"]["w"].T)
         gpt.trf_blocks[b].att.out_proj.bias = assign(gpt.trf_blocks[b].att.out_proj.bias, params["blocks"][b]["attn"]["c_proj"]["b"])
@@ -38,13 +47,13 @@ def load_weights_into_gpt(gpt, params):
         gpt.trf_blocks[b].ff.layers[2].weight = assign(gpt.trf_blocks[b].ff.layers[2].weight, params["blocks"][b]["mlp"]["c_proj"]["w"].T)
         gpt.trf_blocks[b].ff.layers[2].bias = assign(gpt.trf_blocks[b].ff.layers[2].bias, params["blocks"][b]["mlp"]["c_proj"]["b"])
 
-        gpt.trf_blocks[b].norm1.scale = assign(gpt.trf_blocks[b].norm1.scale, params["blocks"][b]["ln_1"]["g"])
-        gpt.trf_blocks[b].norm1.shift = assign(gpt.trf_blocks[b].norm1.shift, params["blocks"][b]["ln_1"]["b"])
-        gpt.trf_blocks[b].norm2.scale = assign(gpt.trf_blocks[b].norm2.scale, params["blocks"][b]["ln_2"]["g"])
-        gpt.trf_blocks[b].norm2.shift = assign(gpt.trf_blocks[b].norm2.shift, params["blocks"][b]["ln_2"]["b"])
+        gpt.trf_blocks[b].norm1.gamma = assign(gpt.trf_blocks[b].norm1.gamma, params["blocks"][b]["ln_1"]["g"])
+        gpt.trf_blocks[b].norm1.beta = assign(gpt.trf_blocks[b].norm1.beta, params["blocks"][b]["ln_1"]["b"])
+        gpt.trf_blocks[b].norm2.gamma = assign(gpt.trf_blocks[b].norm2.gamma, params["blocks"][b]["ln_2"]["g"])
+        gpt.trf_blocks[b].norm2.beta = assign(gpt.trf_blocks[b].norm2.beta, params["blocks"][b]["ln_2"]["b"])
 
-    gpt.final_norm.scale = assign(gpt.final_norm.scale, params["g"])
-    gpt.final_norm.shift = assign(gpt.final_norm.shift, params["b"])
+    gpt.final_norm.gamma = assign(gpt.final_norm.gamma, params["g"])
+    gpt.final_norm.beta = assign(gpt.final_norm.beta, params["b"])
     gpt.out_head.weight = assign(gpt.out_head.weight, params["wte"])
 
 def main():

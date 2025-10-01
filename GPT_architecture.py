@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import tiktoken
-from ch3 import MultiHeadAttention
+from attention import MultiHeadAttention
 from torch.nn.utils.rnn import pad_sequence
 
 GPT_CONFIG_124M = {
