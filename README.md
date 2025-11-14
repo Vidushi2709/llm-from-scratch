@@ -1,34 +1,52 @@
-# LLM from scratch 🤖✨
- 
-Welcome to **Build-LLM-Playground** – my personal sandbox where I tinker with **language models**, piece by piece, while following the *"Build LLMs"* book. Think of it as a LEGO set, but for neural networks! 🧩💻  
+#  Build LLM ༼ つ ◕_◕ ༽つ
+
+
+A hands-on repository where I tinker, train, and transform language models from the ground up. Imagine it as a playground for neural networks, where code meets creativity! 🧩🤖✨
+
+☆*: .｡. o(≧▽≦)o .｡.:*☆
 
 ---
 
-## What’s Happening Here?  
+##  What You’ll Explore (*/ω＼*)
 
-- **Tokenization experiments** – turning text into numbers, because computers don’t speak English… yet.  
-- **Transformers from scratch** – attention, feed-forward layers, layer normalization… all the juicy bits that make LLMs tick.  
-- **Mini GPT models** – assemble, play, break, repeat. See what happens when your model tries to talk back.  
-- **Gradient gymnastics** – check how learning actually happens inside these beasts.  
-- **Memory & parameter detective work** – because size *does* matter (in MBs).  
+```text
+⌨️ Tokenization Experiments
+   Turn text → numbers → magic. Watch your words get "vectorized"!
+
+🔄 Transformers From Scratch
+   - Self-Attention (because every token deserves to be heard)
+   - Multi-Head Attention (like gossiping, but mathematically)
+   - Feed-Forward Layers (aka the brain's gym)
+   - Layer Normalization (keeping neurons calm under pressure)
+
+📝 Mini GPT Models
+   Tiny models with big dreams—they try their best to talk back.
+
+💃 Gradient Gymnastics
+   Watch gradients twist, turn, and pirouette during training.
+
+🕵️‍♂️ Parameter & Memory Detective Work
+   Peek under the hood: because yes, model size *does* matter.
+```
 
 ---
 
-## Getting Started
+## Getting Started ╰(*°▽°*)╯
 
-1. **Clone the repo**  
+### 1️⃣ Clone the Repo
+
 ```bash
 git clone https://github.com/yourusername/Build-LLM-Playground.git
 cd Build-LLM-Playground
-````
+```
 
-2. **Install dependencies**
+### 2️⃣ Install Dependencies
 
 ```bash
 pip install torch tiktoken transformers
 ```
 
-3. **Run experiments**
+### 3️⃣ Run Experiments
 
 ```bash
 python ch3_gpt_model/main.py
@@ -36,14 +54,24 @@ python ch3_gpt_model/main.py
 
 ---
 
-## A Few Notes
+## Notes (❁´◡`❁)
 
-* This is purely for **fun and learning** – these models are tiny and not ready to take over the world. 🌍
-* Some experiments sneak in Hugging Face models for comparison, but the goal is **hands-on building from scratch**.
-* Curious minds and fellow tinkers are welcome! Pull requests, ideas, and memes encouraged. 😎
+```text
+⚠️ These models are tiny.
+   They won’t take over the world… yet! 😎
+
+🔍 Some experiments compare against Hugging Face models.
+   Goal: learn-by-building, not just copying.
+
+💡 Expect bugs, unexpected outputs, and occasional "why is this happening?!" moments.
+   That’s all part of the fun!
+
+😎 Contributions, ideas, memes → always welcome.
+```
 
 ---
 
-## Author
+## Author (┬┬﹏┬┬)
 
-**Vin** – exploring the inner workings of LLMs, one line of code at a time. 🧠💡
+**Vin** – a curious tinkerer exploring the inner workings of LLMs, one line of code at a time.
+
